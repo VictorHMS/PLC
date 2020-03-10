@@ -39,7 +39,6 @@ limpaum [] = []
 limpaum (x:xa) = if (pegan x) == [] then limpaum xa else head (pegan x):(limpaum xa)
 --
 
-len :: String -> Int
 len [] = 0
 len (x:xa) = 1 + len (xa)
 
@@ -66,3 +65,23 @@ testaki :: [Int] -> [Int] -> Bool
 testaki a b 
     | a == [] = True
     | otherwise = False
+
+trad '1' = 1
+trad '0' = 0
+
+btoi :: String -> Int
+btoi [] = 0
+btoi (x:xa) = ((2^len(xa)) * trad(x)) + btoi xa
+
+
+metade :: [Int] -> [[Int]]
+metade [] = [[]]
+metade x = (cut x (div (len x) 2)) : (mtail x (div (len x) 2)) :[]
+
+cut :: [Int] -> Int -> [Int]
+cut x 0 = []
+cut (x:xa) tam = x:(cut xa (tam-1))
+
+mtail :: [Int] -> Int -> [Int]
+mtail x 0 = x
+mtail (x:xa) tam = (mtail xa (tam-1))
