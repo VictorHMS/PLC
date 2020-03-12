@@ -85,3 +85,36 @@ cut (x:xa) tam = x:(cut xa (tam-1))
 mtail :: [Int] -> Int -> [Int]
 mtail x 0 = x
 mtail (x:xa) tam = (mtail xa (tam-1))
+
+calr :: (Float,Float,Float) -> [Float]
+calr (a,b,c)
+    | a == 0 = []
+    | (b^2) -(4*a*c) < 0 = []
+    | (b^2) - (4*a*c) == 0 = (((-b)+sqrt(b^2 - (4*a*c)))/(2*a)):[] 
+    | otherwise = (((-b)+sqrt(b^2 - (4*a*c)))/(2*a)): (((-b)-sqrt(b^2 - (4*a*c)))/(2*a)):[]
+--quick :: [Int] -> [Int]
+--quick xs = [x | (x:xa) <- xs, (head xa) > x]
+
+type Pes = String
+type Liv = String
+type Db = [(Pes,Liv)]
+
+banco = [("Rodrigo","Plc"),("Afonso","SD"),("Zenio","Zoeira"),("Kinho","Gamb"),("Kinho","pseudonimos para fugir do EB"),("Victor", "Gambreverse"),("Zilde","Agua"),("Pedro", "Selva"),("Xmemes","Alagoas")]
+livros:: Db -> Pes -> [Liv]
+livros db pes = [a | (x,a) <- db, x == pes]
+
+emprestimos :: Db -> Liv -> [Pes]
+emprestimos db liv = [a | (a,x) <- db, x == liv]
+
+emprestado :: Db -> Liv -> Bool
+emprestado db liv = ((length([a | (x,a) <- db, a == liv])) > 0)
+
+qtdemprestimos :: Db -> Pes -> Int
+qtdemprestimos db pes = length([a| (a,x) <- db, a == pes])
+
+emprestar :: Db -> Pes -> Liv -> Db
+emprestar [] pes liv = (pes,liv):[]
+emprestar db pes liv = db ++ [(pes,liv)]
+
+quickluck [] = []
+quickluck (a:xs) = quickluck([x | x <- (a:xs), x < a]) ++ a:(quickluck ([x | x <- (a:xs), x > a])) 
